@@ -1,4 +1,5 @@
 .env
 *.db
 plan.md
+daily_log.md
 .venv
