@@ -4,6 +4,6 @@ from fastapi import APIRouter
 router = APIRouter()
 
 
-@router.get("/posts")
+@router.get("/blogs")
 def get_posts():
-    return {"message": "all posts"}
+    return {"message": "all blogs"}
