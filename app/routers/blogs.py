@@ -5,5 +5,5 @@ router = APIRouter()
 
 
 @router.get("/blogs")
-def get_posts():
+def get_blogs() -> dict[str, str]:
     return {"message": "all blogs"}
