@@ -1,19 +1,25 @@
 from fastapi import APIRouter
+from fastapi.params import Depends
+from sqlalchemy.orm import Session
 
-from schemas import UserIn
+from app.db.core import get_db
+from app.schemas import UserIn, UserOut
+from app.services.users import create_db_user, get_db_users, get_db_user_id
 
 
 router = APIRouter()
 
-# CRUD on users
+
+@router.post("/users", response_model=UserOut)
+def create_user(user: UserIn, db: Session = Depends(get_db)) -> UserOut:
+    return create_db_user(user, db)
 
 
-# creating user add hasing to password
-@router.post("/users")
-def create_user(user: UserIn) -> dict[str, str]:
-    return {"email": user.email, "password": user.password}
+@router.get("/users", response_model=list[UserOut])
+def get_users(db: Session = Depends(get_db)) -> list[UserOut]:
+    return get_db_users(db)
 
 
-@router.get("/users")
-def get_users() -> dict[str, str]:
-    return {"message": "returned all user info"}
+@router.get("/users/{id}", response_model=UserOut)
+def get_user_id(id: int, db: Session = Depends(get_db))-> UserOut:
+    return get_db_user_id(id, db)
